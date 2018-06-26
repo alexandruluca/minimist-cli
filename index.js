@@ -6,6 +6,15 @@ const fs = require('fs');
 const logger = require('./lib/logger');
 
 module.exports = function (commandDir) {
+	if(process.argv[2] === '--version' || process.argv[2] === '-v') {
+		var parentPath = path.dirname(require.main.filename);
+		parentPath = parentPath.substring(0, parentPath.lastIndexOf('/'));
+
+		var packageJSON = require(path.join(parentPath, 'package.json'));
+		console.log(packageJSON.version);
+		process.exit();
+	}
+
 	var args = process.argv.slice(2);
 	var commands = [];
 
