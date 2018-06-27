@@ -34,7 +34,6 @@ module.exports = function (commandDir) {
 		var command = commands.join('-');
 		var commandExists = false;
 		var restArgs = [];
-		console.log('command', command);
 
 		for (var i = 0; i < existingCommands.length; i++) {
 			var existingCommand = existingCommands[i];
