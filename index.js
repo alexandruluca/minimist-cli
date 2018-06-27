@@ -30,22 +30,24 @@ module.exports = function (commandDir) {
 	}
 
 	getExistingCommands(commandDir).then(existingCommands => {
-		commands = commands.map(c => c.replace(/-/g, '$'));
+		commands = commands.map(c => c.replace(/-/g, '_'));
 		var command = commands.join('-');
 		var commandExists = false;
 		var restArgs = [];
+		console.log('command', command);
 
 		for (var i = 0; i < existingCommands.length; i++) {
 			var existingCommand = existingCommands[i];
 			if (command.indexOf(existingCommand) === 0) {
-				restArgs = command.substring(existingCommand.length + 1).split('-').map(arg => arg.replace(/\$/g, '-'));
+				restArgs = command.substring(existingCommand.length + 1).split('-').map(arg => arg.replace(/\_/g, '-'));
+
 				command = existingCommand;
 				commandExists = true;
 			}
 		}
 
 		if (!commandExists) {
-			throw new Error(`command '${command}' does not exist`);
+			throw new Error(`command '${getRawCommandStr(command)}' does not exist`);
 		}
 
 		var scriptPath = path.join(commandDir, command);
@@ -72,4 +74,8 @@ function getExistingCommands(commandDir) {
 			resolve(commands);
 		});
 	});
+}
+
+function getRawCommandStr(command) {
+	return command.replace(/-/g, ' ').replace(/_/g, '-');
 }
