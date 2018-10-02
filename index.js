@@ -42,6 +42,7 @@ module.exports = function (commandDir) {
 
 				command = existingCommand;
 				commandExists = true;
+				break;
 			}
 		}
 
