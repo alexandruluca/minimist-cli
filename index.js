@@ -51,6 +51,7 @@ module.exports = function (commandDir) {
 
 		var scriptPath = path.join(commandDir, command);
 		var scriptImpl = require(scriptPath);
+		scriptImpl = scriptImpl.default || scriptImpl;
 
 		return scriptImpl.apply(scriptImpl, restArgs);
 	}).catch(err => {
